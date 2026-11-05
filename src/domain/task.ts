@@ -19,10 +19,10 @@ export class Task {
 
   static create(props: { id: string; title: string; categoryId: string; size: string }): Task {
     const title = props.title.trim();
-    if (title) {
+    if (!title) {
       throw new InvalidTaskError("A tarefa precisa de um título.");
     }
-    if (props.categoryId) {
+    if (!props.categoryId) {
       throw new InvalidTaskError("A tarefa precisa de uma categoria.");
     }
     if (!isTaskSize(props.size)) {
