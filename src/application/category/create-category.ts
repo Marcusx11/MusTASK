@@ -1,5 +1,5 @@
-import { Category } from "../domain/category";
-import type { CategoryRepository, IdGenerator } from "./ports";
+import { Category } from "../../domain/category";
+import type { CategoryRepository, IdGenerator } from "../ports";
 
 export class CreateCategory {
   constructor(

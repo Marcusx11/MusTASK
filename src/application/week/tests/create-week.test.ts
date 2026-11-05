@@ -1,10 +1,10 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { FixedClock } from "../../adapters/in-memory/fixed-clock";
-import { InMemoryWeekRepository } from "../../adapters/in-memory/repositories";
-import { SequentialIdGenerator } from "../../adapters/in-memory/sequential-id-generator";
-import { LocalDate } from "../../domain/local-date";
+import { FixedClock } from "../../../adapters/in-memory/fixed-clock";
+import { InMemoryWeekRepository } from "../../../adapters/in-memory/repositories";
+import { SequentialIdGenerator } from "../../../adapters/in-memory/sequential-id-generator";
+import { LocalDate } from "../../../domain/local-date";
 import { CreateWeek } from "../create-week";
-import { WeekAlreadyExistsError } from "../errors";
+import { WeekAlreadyExistsError } from "../../errors";
 
 describe("CreateWeek", () => {
   let weeks: InMemoryWeekRepository;

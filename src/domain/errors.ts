@@ -8,6 +8,16 @@ export abstract class DomainError extends Error {
 
 export class InvalidDateError extends DomainError {}
 
+export class InvalidTimeError extends DomainError {}
+
 export class InvalidCategoryError extends DomainError {}
 
 export class InvalidTaskError extends DomainError {}
+
+export class TaskAlreadyCompletedError extends DomainError {}
+
+export class InvalidCompletionDateError extends DomainError {}
+
+export class InvalidPeriodError extends DomainError {}
+
+export class InvalidAllocationError extends DomainError {}

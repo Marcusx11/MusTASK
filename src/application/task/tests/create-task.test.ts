@@ -2,12 +2,12 @@ import { beforeEach, describe, expect, it } from "vitest";
 import {
   InMemoryCategoryRepository,
   InMemoryTaskRepository,
-} from "../../adapters/in-memory/repositories";
-import { SequentialIdGenerator } from "../../adapters/in-memory/sequential-id-generator";
-import { InvalidCategoryError, InvalidTaskError } from "../../domain/errors";
-import { CreateCategory } from "../create-category";
+} from "../../../adapters/in-memory/repositories";
+import { SequentialIdGenerator } from "../../../adapters/in-memory/sequential-id-generator";
+import { InvalidCategoryError, InvalidTaskError } from "../../../domain/errors";
+import { CreateCategory } from "../../category/create-category";
 import { CreateTask } from "../create-task";
-import { CategoryNotFoundError } from "../errors";
+import { CategoryNotFoundError } from "../../errors";
 
 describe("CreateCategory + CreateTask", () => {
   let categories: InMemoryCategoryRepository;

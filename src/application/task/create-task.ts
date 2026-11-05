@@ -1,6 +1,6 @@
-import { Task } from "../domain/task";
-import { CategoryNotFoundError } from "./errors";
-import type { CategoryRepository, IdGenerator, TaskRepository } from "./ports";
+import { Task } from "../../domain/task";
+import { CategoryNotFoundError } from "../errors";
+import type { CategoryRepository, IdGenerator, TaskRepository } from "../ports";
 
 export class CreateTask {
   constructor(
