@@ -2,6 +2,7 @@
 // Só interfaces — as implementações ficam em src/adapters.
 import type { Allocation } from "../domain/allocation";
 import type { Category } from "../domain/category";
+import type { Comment } from "../domain/comment";
 import type { LocalDate } from "../domain/local-date";
 import type { Period } from "../domain/period";
 import type { Task } from "../domain/task";
@@ -10,11 +11,13 @@ import type { Week } from "../domain/week";
 export interface CategoryRepository {
   save(category: Category): Promise<void>;
   findById(id: string): Promise<Category | undefined>;
+  findByIds(ids: readonly string[]): Promise<Category[]>;
 }
 
 export interface TaskRepository {
   save(task: Task): Promise<void>;
   findById(id: string): Promise<Task | undefined>;
+  findByIds(ids: readonly string[]): Promise<Task[]>;
   findBacklog(): Promise<Task[]>;
 }
 
@@ -33,7 +36,16 @@ export interface PeriodRepository {
 
 export interface AllocationRepository {
   save(allocation: Allocation): Promise<void>;
+  saveAll(allocations: Allocation[]): Promise<void>;
+  findById(id: string): Promise<Allocation | undefined>;
   findByWeek(weekId: string): Promise<Allocation[]>;
+}
+
+export interface CommentRepository {
+  save(comment: Comment): Promise<void>;
+  delete(id: string): Promise<void>;
+  findById(id: string): Promise<Comment | undefined>;
+  findByTaskIds(taskIds: readonly string[]): Promise<Comment[]>;
 }
 
 /** Fonte do "hoje". Em testes, um relógio fixo. */

@@ -21,3 +21,9 @@ export class InvalidCompletionDateError extends DomainError {}
 export class InvalidPeriodError extends DomainError {}
 
 export class InvalidAllocationError extends DomainError {}
+
+export class InvalidChecklistItemError extends DomainError {}
+
+export class ChecklistItemNotFoundError extends DomainError {}
+
+export class InvalidCommentError extends DomainError {}

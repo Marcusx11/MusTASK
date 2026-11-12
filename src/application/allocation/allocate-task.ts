@@ -1,5 +1,5 @@
-import { Allocation } from "../../domain/allocation";
-import { TaskAlreadyCompletedError } from "../../domain/errors";
+import { Allocation, isWeekday } from "../../domain/allocation";
+import { InvalidAllocationError, TaskAlreadyCompletedError } from "../../domain/errors";
 import { PeriodNotFoundError, TaskNotFoundError, WeekNotFoundError } from "../errors";
 import type {
   AllocationRepository,
@@ -8,8 +8,12 @@ import type {
   TaskRepository,
   WeekRepository,
 } from "../ports";
+import { cardsInCell } from "./cell";
 
-/** Coloca uma tarefa do backlog num dia + período de uma semana existente. */
+/**
+ * Coloca uma tarefa do backlog num dia + período de uma semana existente.
+ * O card novo entra no fim da célula.
+ */
 export class AllocateTask {
   constructor(
     private readonly allocations: AllocationRepository,
@@ -26,7 +30,11 @@ export class AllocateTask {
     periodId: string;
     time?: string | undefined;
   }): Promise<Allocation> {
-    const allocation = Allocation.create({ id: this.ids.next(), ...input });
+    if (!isWeekday(input.weekday)) {
+      throw new InvalidAllocationError(
+        `Dia da semana inválido: ${input.weekday}. Use 1 (segunda) a 7 (domingo).`,
+      );
+    }
 
     const task = await this.tasks.findById(input.taskId);
     if (!task) {
@@ -44,6 +52,10 @@ export class AllocateTask {
       throw new PeriodNotFoundError(`Período não encontrado: "${input.periodId}".`);
     }
 
+    const inWeek = await this.allocations.findByWeek(input.weekId);
+    const position = cardsInCell(inWeek, input.weekday, input.periodId).length + 1;
+
+    const allocation = Allocation.create({ id: this.ids.next(), ...input, position });
     await this.allocations.save(allocation);
     return allocation;
   }

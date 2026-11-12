@@ -8,6 +8,10 @@ export class WeekNotFoundError extends DomainError {}
 
 export class PeriodNotFoundError extends DomainError {}
 
+export class AllocationNotFoundError extends DomainError {}
+
+export class CommentNotFoundError extends DomainError {}
+
 export class WeekAlreadyExistsError extends DomainError {}
 
 export class InvalidPeriodOrderError extends DomainError {}

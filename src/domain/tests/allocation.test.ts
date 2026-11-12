@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { Allocation } from "../allocation";
 import { InvalidAllocationError, InvalidTimeError } from "../errors";
 
-const base = { id: "a1", taskId: "t1", weekId: "w1", weekday: 1, periodId: "p1" };
+const base = { id: "a1", taskId: "t1", weekId: "w1", weekday: 1, periodId: "p1", position: 1 };
 
 describe("Allocation", () => {
   it("cria sem horário", () => {
@@ -27,5 +27,19 @@ describe("Allocation", () => {
     expect(() => Allocation.create({ ...base, weekday: 0 })).toThrow(InvalidAllocationError);
     expect(() => Allocation.create({ ...base, weekday: 8 })).toThrow(InvalidAllocationError);
     expect(() => Allocation.create({ ...base, weekday: 2.5 })).toThrow(InvalidAllocationError);
+  });
+
+  it("exige posição inteira a partir de 1", () => {
+    expect(() => Allocation.create({ ...base, position: 0 })).toThrow(InvalidAllocationError);
+    expect(() => Allocation.create({ ...base, position: 1.5 })).toThrow(InvalidAllocationError);
+  });
+
+  it("moveTo devolve uma cópia em outra célula, mantendo semana, tarefa e horário", () => {
+    const original = Allocation.create({ ...base, time: "09:30" });
+    const moved = original.moveTo({ weekday: 3, periodId: "p2", position: 2 });
+
+    expect(moved).toMatchObject({ id: "a1", taskId: "t1", weekId: "w1", weekday: 3, periodId: "p2", position: 2 });
+    expect(moved.time?.toString()).toBe("09:30");
+    expect(original.isIn(1, "p1")).toBe(true);
   });
 });
